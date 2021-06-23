@@ -11,11 +11,11 @@ MODEL = r'C:\Users\Luke\Desktop\final project\custom-yolov4-detector.cfg'
 
 WEIGHT = r'C:\Users\Luke\Desktop\final project\custom-yolov4-new_best.weights'
 
-query_dictionary = {'all_products':'SELECT * FROM products',
-                    'last_10_customers':'SELECT * FROM customers LIMIT 10',
+query_dictionary = {'Inventory':'SELECT * FROM products',
+                    'newest_customers':'SELECT * FROM customers ORDER BY customer_id DESC LIMIT 10 ',
                     'recent_order_history': 
 """
-SELECT c.name as customer_name ,o.date_time as time_of_order, SUM(p.price) as order_total  
+SELECT c.name as customer_name , SUM(p.price) as order_total  ,o.date_time as time_of_order
 FROM customers as c
 JOIN orders as o
 USING (customer_id)
@@ -24,17 +24,16 @@ USING (order_id)
 JOIN products as p 
 USING (product_id)
 GROUP BY c.name
-ORDER BY o.date_time
+ORDER BY o.date_time DESC
 """,
 'most_popular_products':
 """
-SELECT p.name, SUM(ot.quantity) as total 
+SELECT p.name as Product , SUM(ot.quantity) as Total_sold
 FROM products as p
 JOIN order_item as ot
 USING (product_id)
-
 GROUP BY p.name
-ORDER BY total DESC  
+ORDER BY Total_sold DESC  
 """,
 'best_customers':"""
 SELECT c.name as customer_name , SUM(p.price) as total_spent  
@@ -48,5 +47,5 @@ USING (product_id)
 GROUP BY c.name
 ORDER BY total_spent DESC
 """,
-'all_orders': 'SELECT * FROM orders LIMIT 10'
+
 }
