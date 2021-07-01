@@ -15,6 +15,19 @@ data.py contains all the lists dictionaries and files required for the program
 the .weights and .cfg files are from the yolv4tiny that was trained in a seperate colab notebook using a Robloflow tutorial. 
 
 ## the homepage
+![homepage](customer_sign_in.PNG)
+
+## submit info and open camera
+![submit](submit_info.PNG)
+## Prediction display 
+![prediction](prediction.PNG)
+## Receipt
+![receipt](receipt.PNG)
+## Database
+![database](database.PNG)
+
+
+
 
 
 
