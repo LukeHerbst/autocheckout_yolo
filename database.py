@@ -9,9 +9,9 @@ import datetime
 
 def create_or_connect_database(cursor):
   #define a connection and a cursor 
-  #connection = sqlite3.connect('store.db') # need to put these two lines in 
+  # connection = sqlite3.connect('store.db') # need to put these two lines in 
 
-  #cursor = connection.cursor()
+  # cursor = connection.cursor()
 
   # create the products table
   command1 = """ CREATE TABLE IF NOT EXISTS products (
@@ -41,7 +41,7 @@ def create_or_connect_database(cursor):
   command3 = """ CREATE TABLE IF NOT EXISTS orders(
           order_id INTEGER PRIMARY KEY AUTOINCREMENT, 
           customer_id  INTEGER, 
-          date_time TIMESTAMP ,        
+          date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,        
           FOREIGN KEY(customer_id) REFERENCES customers (customer_id))
           """
   try:
@@ -64,7 +64,9 @@ def create_or_connect_database(cursor):
       print('ERROR AT CREATE order_item TABLE', err)
   
   #return connection , cursor
-
+# connection = sqlite3.connect("store.db")
+# cursor = connection.cursor()
+# create_or_connect_database(cursor)
 
 ### this line needs to be used in the main.py to create/connect to db
 #connection, cursor = create_or_connect_database()
@@ -97,17 +99,23 @@ def find_sign_in_customer_id(cursor,email):
 def create_and_save_current_products(connection,cursor):
     """This function initializes our products into the db and return the product classes to be used in other parts of the program"""
     chips_prod = Product('chips',30000,100)
+    crackers_prod = Product('crackers',18000,100)
+    kitkat_prod = Product('kitkat',20000,100)
     milk_prod  = Product('milk', 33000,100)
     oreo_prod = Product('oreo',15000,100)
+    pepsi_prod = Product('pepsi',12000,100)
     snickers_prod = Product('snickers',15000,100)
     sting_prod = Product('sting',12000,100)
 
     chips_prod.save_to_db(connection,cursor)
+    crackers_prod.save_to_db(connection,cursor)
+    kitkat_prod.save_to_db(connection,cursor)
     milk_prod.save_to_db(connection,cursor)
     oreo_prod.save_to_db(connection,cursor)
+    pepsi_prod.save_to_db(connection,cursor)
     snickers_prod.save_to_db(connection,cursor)
     sting_prod.save_to_db(connection,cursor)
-    return chips_prod, milk_prod, oreo_prod,snickers_prod,sting_prod
+    return chips_prod, crackers_prod,kitkat_prod,milk_prod, oreo_prod,pepsi_prod,snickers_prod,sting_prod
 
 # use this line in the main.py 
 #chips_prod, milk_prod, oreo_prod,snickers_prod,sting_prod = create_and_save_current_products() need to run this in streamlit
@@ -252,7 +260,7 @@ class Product:
 
 class Order:
 
-  def __init__(self, customer_id, date_time = datetime.datetime.now() ,order_id = None):
+  def __init__(self, customer_id, date_time = None ,order_id = None):
     self.customer_id = customer_id
     self.date_time = date_time
     self.order_id = order_id 

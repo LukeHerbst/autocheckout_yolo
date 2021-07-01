@@ -56,8 +56,10 @@ def forwardpassoutput(image,net,IMG_WIDTH,IMG_HEIGHT):
     return boxes , confidences, class_ids, indexes  # using the indexes 
 
 def draw_boxes(result,boxes,confidences, class_ids,indexes,classes_name,colors,font):    
-    label_keeper = []    
-    for i in indexes.flatten():    # this used to have indexes.flatten()
+    label_keeper = [] 
+    
+    for i in indexes.flatten():
+         
         x,y,w,h,= boxes[i]
         label = str(classes_name[class_ids[i]])
 
@@ -73,7 +75,7 @@ def receipt_writer(label_keeper,items_prices):
     total_bill = 0
     for item in label_keeper:
 
-            next_item = item + " " +  str(items_prices[item])
+            next_item = item + "           " +  str(items_prices[item])
             total_bill += items_prices[item]    # this is the amount
             purchase_list.append(next_item)
     return  purchase_list , total_bill
